@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>She Can Foundation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --rose: #e8416e;
+      --blush: #fde8ef;
+      --cream: #fdf6f0;
+      --charcoal: #1a1a2e;
+      --mauve: #c97096;
+      --gold: #e8b86d;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      padding: 1.2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(253,246,240,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232,65,110,0.12);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--rose);
+      letter-spacing: 0.02em;
+    }
+    .nav-tagline {
+      font-size: 0.78rem;
+      font-weight: 300;
+      color: var(--mauve);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 6rem 5rem 4rem;
+      gap: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 50%, rgba(232,65,110,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 10% 80%, rgba(201,112,150,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-text { animation: fadeUp 0.9s ease both; }
+    .hero-label {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--rose);
+      background: var(--blush);
+      padding: 0.35rem 0.9rem; border-radius: 50px;
+      margin-bottom: 1.6rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      line-height: 1.1;
+      color: var(--charcoal);
+      margin-bottom: 1.4rem;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--rose);
+    }
+    .hero-sub {
+      font-size: 1.05rem; line-height: 1.8;
+      color: #555; max-width: 420px;
+      margin-bottom: 2.4rem;
+    }
+
+    /* ── BUTTON ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--rose);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 500;
+      padding: 0.9rem 2rem; border-radius: 50px;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 8px 28px rgba(232,65,110,0.32);
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(232,65,110,0.42);
+      background: #d63060;
+    }
+    .btn-primary svg { transition: transform 0.25s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    /* ── HERO IMAGE ── */
+    .hero-img-wrap {
+      position: relative;
+      animation: fadeUp 0.9s 0.2s ease both;
+    }
+    .hero-img-wrap::before {
+      content: '';
+      position: absolute;
+      width: 90%; height: 90%;
+      background: linear-gradient(135deg, var(--blush), #fce0ec);
+      border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%;
+      top: 5%; left: 5%;
+      z-index: 0;
+      animation: morph 8s ease-in-out infinite;
+    }
+    @keyframes morph {
+      0%,100% { border-radius: 40% 60% 55% 45% / 45% 40% 60% 55%; }
+      50%      { border-radius: 55% 45% 40% 60% / 60% 55% 45% 40%; }
+    }
+    .hero-img-wrap img {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 480px;
+      border-radius: 36% 64% 46% 54% / 42% 38% 62% 58%;
+      object-fit: cover;
+      aspect-ratio: 4/5;
+      display: block; margin: auto;
+      box-shadow: 0 24px 60px rgba(232,65,110,0.18);
+    }
+    /* Floating badge */
+    .badge {
+      position: absolute; bottom: 6%; right: 4%;
+      z-index: 2;
+      background: var(--white);
+      border-radius: 18px;
+      padding: 0.9rem 1.2rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 0.7rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+    .badge-icon { font-size: 1.8rem; }
+    .badge-text { font-size: 0.75rem; font-weight: 500; color: var(--charcoal); line-height: 1.3; }
+    .badge-text span { display: block; color: var(--rose); font-weight: 700; font-size: 1rem; }
+
+    /* ── ABOUT ── */
+    #about {
+      padding: 6rem 5rem;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    #about::after {
+      content: '"She Can"';
+      font-family: 'Playfair Display', serif;
+      font-size: 14rem;
+      color: rgba(232,65,110,0.04);
+      position: absolute; right: -2rem; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--mauve);
+      margin-bottom: 0.8rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      color: var(--charcoal);
+      margin-bottom: 1.8rem;
+    }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem; margin-top: 3rem;
+    }
+    .about-card {
+      padding: 2rem; border-radius: 20px;
+      background: var(--cream);
+      border: 1px solid rgba(232,65,110,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .about-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(232,65,110,0.1);
+    }
+    .about-card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .about-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; margin-bottom: 0.6rem;
+      color: var(--charcoal);
+    }
+    .about-card p { font-size: 0.9rem; line-height: 1.7; color: #666; }
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: linear-gradient(135deg, var(--rose), var(--mauve));
+      padding: 3.5rem 5rem;
+      display: flex; gap: 3rem;
+      justify-content: space-around;
+    }
+    .stat { text-align: center; color: var(--white); }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700;
+      display: block; line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.82rem; letter-spacing: 0.1em;
+      text-transform: uppercase; opacity: 0.85; margin-top: 0.4rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,0.7);
+      padding: 3.5rem 5rem 2rem;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 2.5rem; margin-bottom: 2rem;
+    }
+    .footer-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--white); margin-bottom: 0.6rem;
+    }
+    .footer-brand span { color: var(--rose); }
+    .footer-desc { font-size: 0.88rem; line-height: 1.7; max-width: 280px; }
+    .footer-links h4 {
+      color: var(--white); font-size: 0.8rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      display: block; color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 0.88rem;
+      margin-bottom: 0.5rem; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--rose); }
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.82rem;
+    }
+    .footer-bottom a { color: var(--rose); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #hero { grid-template-columns: 1fr; padding: 6rem 2rem 3rem; text-align: center; }
+      .hero-sub { max-width: 100%; }
+      .hero-img-wrap { order: -1; }
+      .hero-img-wrap img { max-width: 300px; }
+      #about { padding: 4rem 2rem; }
+      .about-grid { grid-template-columns: 1fr; }
+      .stats-bar { flex-wrap: wrap; padding: 3rem 2rem; gap: 2rem; }
+      footer { padding: 3rem 2rem 1.5rem; }
+      .footer-top { flex-direction: column; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      #about::after { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">She Can Foundation</div>
+    <div class="nav-tagline">Empowering Women & Girls</div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-text">
+      <div class="hero-label">🌸 NGO Since 2015</div>
+      <h1>Because <em>She Can</em><br>Change the World</h1>
+      <p class="hero-sub">
+        We believe every woman and girl deserves the opportunity to learn, lead, and thrive. She Can Foundation works to break barriers and build futures — one life at a time.
+      </p>
+      <a href="#about" class="btn-primary">
+        Discover Our Mission
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-img-wrap">
+      <!-- Placeholder image via picsum (women empowerment theme) -->
+      <img
+        src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?w=600&q=80"
+        alt="A woman looking confident and empowered"
+        onerror="this.src='https://picsum.photos/seed/shecan/480/600'"
+      />
+      <div class="badge">
+        <div class="badge-icon">🌍</div>
+        <div class="badge-text">
+          <span>5,000+</span>
+          Lives Impacted
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">Who We Are</p>
+    <h2>Our Story &amp; Mission</h2>
+    <p style="max-width:580px; line-height:1.8; color:#555; font-size:1rem;">
+      She Can Foundation is a non-profit organisation dedicated to empowering women and girls through education, mentorship, and community support. We partner with local communities and global advocates to create lasting, meaningful change.
+    </p>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="icon">📚</div>
+        <h3>Education First</h3>
+        <p>We fund scholarships, skill-building workshops, and digital literacy programs for girls who face barriers to education.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">🤝</div>
+        <h3>Mentorship Network</h3>
+        <p>Our mentors connect women to professional networks, guiding them from potential to achievement in every field.</p>
+      </div>
+      <div class="about-card">
+        <div class="icon">💪</div>
+        <h3>Community Power</h3>
+        <p>We build safe spaces and strong communities where women can share, grow, and lead without fear or limitation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-num">5K+</span><div class="stat-label">Women Supported</div></div>
+    <div class="stat"><span class="stat-num">12</span><div class="stat-label">Countries Reached</div></div>
+    <div class="stat"><span class="stat-num">300+</span><div class="stat-label">Mentors Active</div></div>
+    <div class="stat"><span class="stat-num">8yrs</span><div class="stat-label">Of Impact</div></div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">She <span>Can</span> Foundation</div>
+        <p class="footer-desc">Committed to a world where every woman and girl can rise, lead, and shine.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Explore</h4>
+        <a href="#">About Us</a>
+        <a href="#">Our Programs</a>
+        <a href="#">Get Involved</a>
+        <a href="#">Donate</a>
+      </div>
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <a href="#">Instagram</a>
+        <a href="#">Twitter / X</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">contact@shecan.org</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 She Can Foundation. All rights reserved.</span>
+      <span>Made with ❤️ for women everywhere</span>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ── 1. DARK MODE TOGGLE ── */
+    const dmBtn = document.createElement('button');
+    dmBtn.innerHTML = '🌙';
+    dmBtn.title = 'Toggle Dark Mode';
+    dmBtn.style.cssText = `
+      position:fixed; bottom:2rem; right:2rem; z-index:999;
+      width:48px; height:48px; border-radius:50%; border:none;
+      background:var(--rose); color:#fff; font-size:1.3rem;
+      cursor:pointer; box-shadow:0 4px 16px rgba(232,65,110,0.4);
+      transition:transform 0.2s, box-shadow 0.2s;
+    `;
+    document.body.appendChild(dmBtn);
+
+    let dark = false;
+    dmBtn.addEventListener('click', () => {
+      dark = !dark;
+      dmBtn.innerHTML = dark ? '☀️' : '🌙';
+      document.documentElement.style.setProperty('--cream',   dark ? '#0f0f1a' : '#fdf6f0');
+      document.documentElement.style.setProperty('--white',   dark ? '#1a1a2e' : '#ffffff');
+      document.documentElement.style.setProperty('--charcoal',dark ? '#f0e8ff' : '#1a1a2e');
+      document.body.style.background = dark ? '#0f0f1a' : '';
+      dmBtn.style.transform = 'scale(1.15)';
+      setTimeout(() => dmBtn.style.transform = '', 200);
+    });
+
+    /* ── 2. TYPEWRITER on hero h1 em ── */
+    const words = ['Change the World', 'Lead the Way', 'Break Barriers', 'Shape the Future'];
+    const el = document.querySelector('h1 em');
+    let wi = 0, ci = 0, deleting = false;
+
+    function type() {
+      const word = words[wi];
+      el.textContent = deleting ? word.slice(0, ci--) : word.slice(0, ci++);
+      if (!deleting && ci > word.length)      { deleting = true; setTimeout(type, 1400); return; }
+      if (deleting && ci < 0)                 { deleting = false; wi = (wi + 1) % words.length; }
+      setTimeout(type, deleting ? 55 : 90);
+    }
+    type();
+
+    /* ── 3. SCROLL-TRIGGERED COUNTER ANIMATION ── */
+    const counters = [
+      { el: null, target: 5000, suffix: 'K+', divisor: 1000 },
+      { el: null, target: 12,   suffix: '',   divisor: 1    },
+      { el: null, target: 300,  suffix: '+',  divisor: 1    },
+      { el: null, target: 8,    suffix: 'yrs',divisor: 1    },
+    ];
+    document.querySelectorAll('.stat-num').forEach((el, i) => counters[i].el = el);
+
+    let counted = false;
+    function animateCounters() {
+      counters.forEach(({ el, target, suffix, divisor }) => {
+        let start = 0;
+        const duration = 1600;
+        const step = timestamp => {
+          if (!start) start = timestamp;
+          const progress = Math.min((timestamp - start) / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          const val = Math.floor(ease * target);
+          el.textContent = divisor > 1 ? (val / divisor).toFixed(val >= 1000 ? 0 : 0) + suffix : val + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }
+
+    /* ── 4. INTERSECTION OBSERVER — reveal + trigger counters ── */
+    const revealEls = document.querySelectorAll('.about-card, .hero-text, .hero-img-wrap, h2');
+    revealEls.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(28px)';
+      el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(el => observer.observe(el));
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !counted) {
+        counted = true;
+        animateCounters();
+      }
+    }, { threshold: 0.5 });
+    statsObserver.observe(document.querySelector('.stats-bar'));
+
+    /* ── 5. NAVBAR shrink on scroll ── */
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.padding = '0.7rem 2.5rem';
+        nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+      } else {
+        nav.style.padding = '1.2rem 2.5rem';
+        nav.style.boxShadow = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
